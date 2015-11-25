@@ -1,6 +1,6 @@
 {
-  "name": "JS-Widget-Hooks",
-  "description": "A standardized way to initialize and handle clientside widgets",
+  "name": "js-widget-hooks",
+  "description": "A standardized way to initialize and handle clientside widgets.",
   "main": "dist/widget-hooks.js",
   "authors": [
     "Andreas Schönefeldt <andreas.schoenefeld@bee.io>"
