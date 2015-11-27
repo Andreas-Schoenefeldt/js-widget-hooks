@@ -5,6 +5,13 @@
  */
 define(['jquery'], function($){
 	
+	// debug helper function
+	var debug = function(){
+		if (typeof(console) == 'object') {
+			console.log.apply(this, arguments);
+		}
+	}
+	
 	// this is the Widgets Object
 	return { 
 		
