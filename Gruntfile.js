@@ -33,7 +33,8 @@ module.exports = function(grunt) {
 		
 		, uglify: { // minify and optimize js files
 			  options : {
-				screwIE8 : true
+				  screwIE8 : true
+				, banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> \n *  <%= pkg.description %>\n */\n'
 			}
 			, prd: {
 			  files: {
