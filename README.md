@@ -17,4 +17,28 @@ Using a standardized approach to javascript widgets has the following benefits:
 * simply call app.widgets.init() to reinitialization any widgets, when they are included via ajax
 * new developers can easily find the code, used to handle a widget
 
+# Examples
+
+## Simple Initilization
+```
+require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
+	Widgets.register('your-name', function(elem){
+		
+		// do something
+	});
+	
+	Widgets.init($('body'));
+}
+```
+
+## Initilization with additional requirements
+```
+require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
+	Widgets.register('your-name', function(elem, dependency1, dependency2){
+		// do something, all dependencys are already loaded
+	}, ['dependency1', 'dependency2']);
+	
+	Widgets.init($('body'));
+}
+```
  

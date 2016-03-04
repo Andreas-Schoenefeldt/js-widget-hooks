@@ -1,9 +1,11 @@
 {
   "name": "js-widget-hooks",
-  "description": "A standardized way to initialize and handle clientside widgets.",
-  "main": "dist/widget-hooks.js",
+  "description": "A standardized way to initialize and handle clientside widgets. Helps to keep them organized and only to load them if the code should realy be executed. It provides a strong linking of the actual html code with the executed javascript without much hassle.",
+  "main": [
+    "dist/widget-hooks.js"
+  ],
   "authors": [
-    "Andreas Schönefeldt <andreas.schoenefeld@bee.io>"
+    "Andreas Schönefeldt <schoenefeldt.andreas@gmail.com>"
   ],
   "license": "MIT",
   "keywords": [
@@ -23,5 +25,7 @@
   ],
   "dependencies": {
     "jquery": "~2.1.4"
-  }
+  },
+  "version": "1.0.4",
+  "repository": "https://github.com/Andreas-Schoenefeldt/js-widget-hooks.git"
 }

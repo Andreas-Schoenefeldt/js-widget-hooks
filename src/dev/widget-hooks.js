@@ -104,7 +104,11 @@ define(['jquery'], function($){
 					// now check, if we need external requirements
 					if (this.registered[widgetname][0]) {
 						require(this.registered[widgetname][0], function(){
-							that.registered[widgetname][1](elem);
+							
+							var args = Array.prototype.slice.call(arguments);
+							args.unshift(elem); // the elem is always the first argument for the widget
+							
+							that.registered[widgetname][1].apply(elem, args);
 							elem.addClass(this.widgetClass + '-initialized');
 						});
 					} else {
