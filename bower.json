@@ -24,8 +24,8 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4"
+    "jquery": "2.1.4 - 2"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": "https://github.com/Andreas-Schoenefeldt/js-widget-hooks.git"
 }
