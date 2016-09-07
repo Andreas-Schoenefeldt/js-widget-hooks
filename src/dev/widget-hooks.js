@@ -8,7 +8,8 @@ define(['jquery'], function($){
 	// debug helper function
 	var debug = function(){
 		if (typeof(console) == 'object') {
-			console.log.apply(console, arguments);
+			arguments[0] = '[js-widget-hooks] ' +arguments[0]
+			console.error.apply(console, arguments);
 		}
 	}
 	
@@ -41,6 +42,7 @@ define(['jquery'], function($){
 			var priorityList = []
 			  , wdgArrays = {}
 			  , wdg, i, k, cList, allWidgets = []
+			  , that = this
 			;
 			
 			for (wdg in this.registered) {
@@ -57,20 +59,28 @@ define(['jquery'], function($){
 			if (! root) root = $('body'); // fallback to complete DOM execution, if we get not a subnode
 			
 			// get all the elements of the type widget
-			root.find('.' + this.widgetClass).each(function(){
+			root.find('.' + that.widgetClass).each(function(){
 				var elem = $(this)
-				  , names = elem.data('widgetname').split(' ')
-				  , name
-				  , i
+				  , dataWidgetsAttributeName = that.widgetClass + 's'
+				  , names = elem.data(dataWidgetsAttributeName)
+				  , name, i
 				;
 				
-				for (i in names) {
-					name = names[i];
-					if (wdgArrays[name] !== undefined) {
-						wdgArrays[name].push(elem);
-					} else {
-						debug("No method for widget " + name + " provided");
+				if (names) {
+					names = names.split(' ')
+					
+					for (i in names) {
+						name = names[i];
+						if (wdgArrays[name] !== undefined) {
+							wdgArrays[name].push(elem);
+						} else {
+							debug("No method for widget " + name + " provided on %o", elem);
+							elem.addClass(that.widgetClass + '-config-error');
+						}
 					}
+				} else {
+					debug("missing data-"+ dataWidgetsAttributeName + " attribute on %o", elem);
+					elem.addClass(that.widgetClass + '-config-error');
 				}
 			});
 			//  and initialise them according to the priority
@@ -109,15 +119,15 @@ define(['jquery'], function($){
 							args.unshift(elem); // the elem is always the first argument for the widget
 							
 							that.registered[widgetname][1].apply(elem, args);
-							elem.addClass(this.widgetClass + '-initialized');
+							elem.addClass(that.widgetClass + '-initialized');
 						});
 					} else {
 						this.registered[widgetname][1](elem);	
-						elem.addClass(this.widgetClass + '-initialized');
+						elem.addClass(that.widgetClass + '-initialized');
 					}
 				}
 			} catch (e) {
-				debug("Error during execution of widget " + widgetname + ": " + e.message);
+				debug("Error during execution of widget %o " + widgetname + ": " + e.message, elem);
 				elem.addClass(this.widgetClass + '-error');
 				return false;
 			}
