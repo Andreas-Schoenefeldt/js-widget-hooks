@@ -1,7 +1,7 @@
 /**
  *	The Wisget Hooks, which allow to hook javascript execution in the following form: 
  *
- *	<div class="widget" id="my-widget-root" data-widgetname="my-widget">...</div>
+ *	<div class="widget" id="my-widget-root" data-widgets="my-widget">...</div>
  */
 define(['jquery'], function($){
 	
