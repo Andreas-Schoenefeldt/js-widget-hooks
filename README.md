@@ -33,7 +33,7 @@ require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
 
 ## Initilization with additional requirements
 
-You can just pass an array of requirejs module path, like ```js['dependency1', 'path/dependency2']```
+You can just pass an array of requirejs module path, like ```['dependency1', 'path/dependency2']```
 
 ```js
 require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
