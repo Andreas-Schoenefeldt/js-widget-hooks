@@ -20,7 +20,7 @@ Using a standardized approach to javascript widgets has the following benefits:
 # Examples
 
 ## Simple Initilization
-```
+```js
 require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
 	Widgets.register('your-name', function(elem){
 		
@@ -32,11 +32,14 @@ require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
 ```
 
 ## Initilization with additional requirements
-```
+
+You can just pass an array of requirejs module path, like ```js['dependency1', 'path/dependency2']```
+
+```js
 require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
 	Widgets.register('your-name', function(elem, dependency1, dependency2){
 		// do something, all dependencys are already loaded
-	}, ['dependency1', 'dependency2']);
+	}, ['dependency1', 'path/dependency2']);
 	
 	Widgets.init($('body'));
 }
