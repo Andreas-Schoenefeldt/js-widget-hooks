@@ -17,6 +17,12 @@ Using a standardized approach to javascript widgets has the following benefits:
 * simply call app.widgets.init() to reinitialization any widgets, when they are included via ajax
 * new developers can easily find the code, used to handle a widget
 
+# Installation
+
+```
+npm install --save-dev js-widget-hooks
+```
+
 # Examples
 
 ## Simple Initilization
