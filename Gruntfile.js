@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 	var repository = {
 		  name: "js-widget-hooks"
 		, description: "A standardized way to initialize and handle clientside widgets. Helps to keep them organized and only to load them if the code should realy be executed. It provides a strong linking of the actual html code with the executed javascript without much hassle."
-		, version: "2.0.1" // The current Version
+		, version: "2.0.2" // The current Version
 		, license : 'MIT'
 		, authors: [
 			"Andreas Schönefeldt <schoenefeldt.andreas@gmail.com>"
