@@ -27,7 +27,7 @@ npm install --save-dev js-widget-hooks
 
 ## Simple Initilization
 ```js
-import Widgets from '../src/dev/widget-hooks';
+import Widgets from 'js-widget-hooks';
 	
 Widgets.register('your-name', function(elem){		
 		// do something

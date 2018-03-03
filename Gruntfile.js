@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 	var repository = {
 		  name: "js-widget-hooks"
 		, description: "A standardized way to initialize and handle clientside widgets. Helps to keep them organized and only to load them if the code should realy be executed. It provides a strong linking of the actual html code with the executed javascript without much hassle."
-		, version: "2.0.0" // The current Version
+		, version: "2.0.1" // The current Version
 		, license : 'MIT'
 		, authors: [
 			"Andreas Schönefeldt <schoenefeldt.andreas@gmail.com>"
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 		}
 	};
 	
-	gruntConf.uglify.prd.files['dist/widget-hooks.js'] = ['src/dev/widget-hooks.js'];
+	gruntConf.uglify.prd.files['dist/js-widget-hooks.js'] = ['src/dev/js-widget-hooks.js'];
 	
 	let init = function(){
 		// writing the package files

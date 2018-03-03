@@ -1,4 +1,4 @@
-import Widgets from '../src/dev/widget-hooks';
+import Widgets from '../src/dev/js-widget-hooks';
 
 let now = function(){
     return (new Date()).getMilliseconds() + ': ';
