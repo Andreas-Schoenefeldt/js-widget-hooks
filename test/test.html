@@ -1,38 +1,16 @@
 <html>
 	<head>
 		<title>Js Widget Test</title>
+		<meta charset="utf-8">
 	</head>
 	<body>
 		Loading Widgets...
 		<div class="widget" data-widgets="test"></div>
 		
-		<div class="widget" data-widgets="test"></div>
+		<div class="widget" data-widgets="test2 test"></div>
 		
-		<div class="widget" data-widgets="test-with-additional-requirements"></div>
-		
-		<div class="widget" data-widgets="first-will-fail test-with-additional-requirements"></div>
-		
-		<script src="../src/require.js"></script>
-		<script>
-			require.config({
-				  baseUrl: "../src/"
-				
-				, map: {
-					  // '*' means all modules will get 'jquery-private'
-					  // for their 'jquery' dependency.
-					  '*': { 'jquery': 'jquery-private' },
+		<div class="widget" data-widgets="first-will-fail test"></div>
 
-					  // 'jquery-private' wants the real jQuery module
-					  // though. If this line was not here, there would
-					  // be an unresolvable cyclic dependency.
-					  'jquery-private': { 'jquery': 'jquery'}
-					}
-				
-				, shim : {
-						  'jquery-private': { exports: 'jQuery' }
-					}
-			});
-		</script>
-		<script src="main.js"></script>
+		<script src="main-compiled.js"></script>
 	</body>
 </html>
