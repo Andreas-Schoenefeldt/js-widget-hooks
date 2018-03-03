@@ -99,8 +99,6 @@
                 var widgetName = wdg[0];
                 var cList = wdgArrays[widgetName];
 
-                console.log(wdgArrays);
-
                 cList.forEach(function (classEl) {
                     allWidgets[allWidgets.length] = classEl;
                     that.initSpecific(classEl, widgetName);
