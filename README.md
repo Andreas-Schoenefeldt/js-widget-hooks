@@ -1,5 +1,5 @@
 # js-widget-hooks
-A simple require js module, which allows to keep an standardized aproach of client side javascript widget implementation. Usuualy client side widgets are develped in a way, that during dom load a certain css class is targeted and then triggers the dynamic javascript enhancement. While this is not bad, it makes it difficult to debug and identify widget components later on. 
+A simple js module, which allows to keep an standardized aproach of client side javascript widget implementation. Usuualy client side widgets are develped in a way, that during dom load a certain css class is targeted and then triggers the dynamic javascript enhancement. While this is not bad, it makes it difficult to debug and identify widget components later on. 
 
 The widget hooks try to porvide a standardized approach to link and initialize javascript client side widgets and also only load the required sometimes very complex code blocks if te widget is actualy present on the side.
 
