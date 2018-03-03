@@ -14,7 +14,7 @@ Using a standardized approach to javascript widgets has the following benefits:
 * easily understand why there is a html5 data attribute on a certain html tag
 * use similar syntax for a multitude of different widgets
 * don't care about selectors and plugin calls
-* simply call app.widgets.init() to reinitialization any widgets, when they are included via ajax
+* simply call Widgets.init() to reinitialization any widgets, when they are included via ajax
 * new developers can easily find the code, used to handle a widget
 
 # Installation
@@ -27,27 +27,11 @@ npm install --save-dev js-widget-hooks
 
 ## Simple Initilization
 ```js
-require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
-	Widgets.register('your-name', function(elem){
-		
+import Widgets from '../src/dev/widget-hooks';
+	
+Widgets.register('your-name', function(elem){		
 		// do something
-	});
+});
 	
-	Widgets.init($('body'));
-}
-```
-
-## Initilization with additional requirements
-
-You can just pass an array of requirejs module path, like ```['dependency1', 'path/dependency2']```
-
-```js
-require(['jquery', 'dev/widget-hooks'], function($, Widgets) {
-	Widgets.register('your-name', function(elem, dependency1, dependency2){
-		// do something, all dependencys are already loaded
-	}, ['dependency1', 'path/dependency2']);
-	
-	Widgets.init($('body'));
-}
-```
- 
+Widgets.init($('body'));
+``` 
