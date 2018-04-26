@@ -32,6 +32,11 @@ import Widgets from 'js-widget-hooks';
 Widgets.register('your-name', function(elem){		
 		// do something
 });
-	
-Widgets.init($('body'));
+
+Widgets.init();
+
+// or a specific doom node, if you have it:
+
+Widgets.init(document.querySelector('.page-root'));
+
 ``` 
