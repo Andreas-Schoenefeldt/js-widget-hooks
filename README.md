@@ -25,6 +25,19 @@ npm install --save-dev js-widget-hooks
 
 # Examples
 
+## Apply a widget in the DOM
+Widgets can this way very easily added directly in your markup:
+```html
+<body>
+	[markup]
+	<div class="widget other-class" data-widgets="your-name">
+		[other markup]
+	</div>
+	
+	[more markup]
+</body>
+```
+
 ## Simple Initilization
 ```js
 import Widgets from 'js-widget-hooks';
