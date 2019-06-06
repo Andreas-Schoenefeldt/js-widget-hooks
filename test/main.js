@@ -19,3 +19,9 @@ Widgets.register('test2', function (elem) {
 
 
 Widgets.init();
+
+Widgets.setOptions({
+    'widgetClass': 'js-widget'
+});
+
+Widgets.init();
