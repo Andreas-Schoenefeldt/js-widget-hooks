@@ -55,7 +55,7 @@ Widgets.register('your-name', function(domElem){
 
 Widgets.init();
 
-// or a specific doom node, if you have it:
+// or a specific dom-node, if you have it:
 
 Widgets.init(document.querySelector('.page-root'));
 
