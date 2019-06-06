@@ -33,10 +33,17 @@ Using a standardized approach to javascript widgets has the following benefits:
 
 ## Examples
 
-### Simple Initilization
-
+### Apply a widget in the DOM
+Widgets can this way very easily added directly in your markup:
 ```html
-<button class="widget" data-widgets="your-name">Make me functional!</button>
+<body>
+	[markup]
+	<div class="widget other-class" data-widgets="your-name">
+		[other markup]
+	</div>
+	
+	[more markup]
+</body>
 ```
 
 ```javascript
@@ -58,7 +65,7 @@ Widgets.init(document.querySelector('.page-root'));
 In case some other javascript functionality beyond your controll is already hooked to the widget class.
 
 ```html
-<button class="different-widget" data-different="your-name">Make me functional!</button>
+<button class="different-widget other-class" data-different="your-name">Make me functional!</button>
 ```
 
 ```javascript
