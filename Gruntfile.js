@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 			}
 			
 			, uglify : {
-				files: ['src/dev/*.js', 'test/*.js'],
+				files: ['src/dev/*.js', 'test/main.js'],
 				tasks: ['uglify:prd', 'webpack']
 			}
 		}

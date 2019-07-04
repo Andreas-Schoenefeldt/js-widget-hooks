@@ -17,6 +17,10 @@ Widgets.register('test2', function (elem) {
     console.log(str);
 }, 1);
 
+Widgets.register('will-error', function (elem) {
+    throw ('I don\'t exist');
+}, 1);
+
 
 Widgets.init();
 

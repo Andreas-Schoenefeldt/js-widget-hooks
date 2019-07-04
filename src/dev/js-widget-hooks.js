@@ -159,7 +159,7 @@
 
                 }
             } catch (e) {
-                debug("Error during execution of widget %o " + widgetName + ": " + e.message, elem);
+                debug("Error during execution of widget %o at %o:\n%o", widgetName, elem, e);
                 elem.classList.add(that.widgetClass + '-error');
                 return false;
             }

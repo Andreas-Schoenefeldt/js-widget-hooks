@@ -23,6 +23,6 @@
     "test",
     "tests"
   ],
-  "version": "2.0.6",
+  "version": "2.0.7",
   "repository": "https://github.com/Andreas-Schoenefeldt/js-widget-hooks.git"
 }

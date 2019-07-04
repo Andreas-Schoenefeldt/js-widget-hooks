@@ -1,7 +1,7 @@
 {
   "name": "js-widget-hooks",
   "description": "A standardized way to initialize and handle clientside widgets. Helps to keep them organized and only to load them if the code should realy be executed. It provides a strong linking of the actual html code with the executed javascript without much hassle.",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "repository": "https://github.com/Andreas-Schoenefeldt/js-widget-hooks.git",
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -16,7 +16,12 @@
     "webpack": "^4.33.0",
     "webpack-cli": "^2.0.10"
   },
-  "main": "dist/js-widget-hooks.js",
+  "main": "src/dev/js-widget-hooks.js",
   "license": "MIT",
-  "keywords": ["browser", "html", "plain-javascript", "helper"]
+  "keywords": [
+    "browser",
+    "html",
+    "plain-javascript",
+    "helper"
+  ]
 }
