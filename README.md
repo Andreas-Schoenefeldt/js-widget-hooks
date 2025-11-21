@@ -75,13 +75,17 @@ Widgets.register('your-name', function(domElem){
 		// do something with domElem 
 });
 
-Widgets.init(null, {
+await Widgets.init(null, {
     widgetClass: 'different-widget',
-    widgetDataName: 'different'
+    widgetDataName: 'different',
+    
+    // if you preffer jQuery
+    elemCallback: (elem) => $(elem)
 });
 ```
 
 Possible options are:
-* widgetClass: The html-class to mark the elements as widgets (default: widget)
+* widgetClass: The html-class to mark the elements as widgets (default: js-widget)
 * widgetDataName: the data attribute name (default: widgets)
-* scriptClass: The html-class set for dynamic script imports  
+* scriptClass: The html-class set for dynamic script imports
+* elemCallback: Optional function, to process the dom element, before the widget is executed. Ideal to convert al dom nodes into jQuery elements before processing for example.

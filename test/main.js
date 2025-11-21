@@ -18,14 +18,16 @@ Widgets.register('test2', function (elem) {
 }, 1);
 
 Widgets.register('will-error', function (elem) {
-    throw ('I don\'t exist');
+    throw new Error('I don\'t exist');
 }, 1);
 
 
-Widgets.init();
+Widgets.init(null, {
+    'widgetClass': 'widget'
+}).then(function () {
+    Widgets.setOptions({
+        'widgetClass': 'js-widget'
+    });
 
-Widgets.setOptions({
-    'widgetClass': 'js-widget'
+    Widgets.init();
 });
-
-Widgets.init();

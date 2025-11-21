@@ -3,7 +3,7 @@
 /**
  *	The Widget Hooks, which allow to hook javascript execution in the following form:
  *
- *	<div class="widget" id="my-widget-root" data-widgets="my-widget">...</div>
+ *	<div class="js-widget" id="my-widget-root" data-widgets="my-widget">...</div>
  */
 (function (root, factory) {
 
@@ -28,12 +28,26 @@
         }
     };
 
+    // courtesy of https://web.dev/articles/optimize-long-tasks
+    const yieldToMain = function () {
+        // browser support for scheduler is not ideal
+        if (window.scheduler && window.scheduler.yield) {
+            return window.scheduler.yield();
+        }
+
+        // Fall back to yielding with setTimeout.
+        return new Promise(function (resolve) {
+            setTimeout(resolve, 0);
+        });
+    };
+
     // this is the Widgets Object
     return {
 
-        widgetClass: 'widget',
+        widgetClass: 'js-widget',
         widgetDataName: 'widgets',
         scriptClass: 'dyn-script',
+        elemCallback: undefined,
 
         vars: {}, // place to put data
 
@@ -52,7 +66,7 @@
 
         setOptions: function (options) {
             if (options) {
-                ['widgetClass', 'scriptClass', 'widgetDataName'].forEach(function (attr) {
+                ['widgetClass', 'scriptClass', 'widgetDataName', 'elemCallback'].forEach(function (attr) {
                     if (options[attr] !== undefined) {
                         this[attr] = options[attr];
                     }
@@ -65,9 +79,12 @@
          * @param {Node} [root=body] the node to initialize the widgets on
          * @param {{}} [options]
          */
-        init: function (root, options) {
+        init: async function (root, options) {
+            let lastYield = performance.now();
+            const yieldDeadline = 50; // deadline in milliseconds - apparently 50ms is best practice for a break
+
             var priorityList = [],
-                wdgArrays = {},
+                widgetArrays = {},
                 wdg, k, allWidgets = [],
                 that = this
             ;
@@ -78,7 +95,7 @@
             // sort the widgets
             for (wdg in this.registered) {
                 priorityList[priorityList.length] = [wdg, this.registered[wdg][1]]; // 1 is the priority
-                wdgArrays[wdg] = [];
+                widgetArrays[wdg] = [];
             }
 
             priorityList.sort(function (a, b) {
@@ -101,11 +118,11 @@
 
                 if (names) {
                     names.split(' ').forEach(function (name) {
-                        if (wdgArrays[name] !== undefined) {
-                            wdgArrays[name].push(elem);
+                        if (widgetArrays[name] !== undefined) {
+                            widgetArrays[name].push(elem);
                             successCount++;
                         } else {
-                            debug("No method for widget " + name + " provided on %o", elem);
+                            debug("No method for widget %o provided on %o", name, elem);
                             elem.classList.add(that.widgetClass + '-config-error');
                         }
                     });
@@ -122,19 +139,25 @@
             });
 
             //  and initialise them according to the priority
-            priorityList.forEach(function (wdg) {
-                var widgetName = wdg[0];
-                var cList = wdgArrays[widgetName];
+            for (let widgetName in widgetArrays) {
+                const cList = widgetArrays[widgetName];
 
-                cList.forEach(function (classEl) {
-                    allWidgets[allWidgets.length] = classEl;
-                    that.initSpecific(classEl, widgetName);
-                });
+                for (let classEl of cList) {
+                    allWidgets.push(classEl);
+
+                    // we async everything, to not block page rendering
+                    await that.initSpecific(classEl, widgetName);
+
+                    if (performance.now() - lastYield > yieldDeadline) {
+                        await yieldToMain();
+                        lastYield = performance.now();
+                    }
+                }
 
                 if (that.registeredFinalls[widgetName]) that.registeredFinalls[widgetName]();
 
-                delete wdgArrays[widgetName]; // remove the initialized array, in order to check, if something was not initialized
-            });
+                delete widgetArrays[widgetName]; // remove the initialized array, in order to check, if something was not initialized
+            }
 
             // delete the widget class after all executions have finished in case of multi widgets
             for (k in allWidgets) {
@@ -149,17 +172,17 @@
          * @param {boolean} force - allows to initialize a widget also, if it was already initialized
          * @returns {boolean}
          */
-        initSpecific: function (elem, widgetName, force) {
+        initSpecific: async function (elem, widgetName, force) {
             var that = this;
             try {
                 if (elem.classList.contains(that.widgetClass) || force) { // just in case something has changed meanwhile...
 
-                    this.registered[widgetName][0](elem);
+                    await that.registered[widgetName][0](that.elemCallback ? that.elemCallback(elem) : elem);
                     elem.classList.add(that.widgetClass + '-initialized');
 
                 }
             } catch (e) {
-                debug("Error during execution of widget %o at %o:\n%o", widgetName, elem, e);
+                debug("Error during execution of widget %o at %o: %o", widgetName, elem, e);
                 elem.classList.add(that.widgetClass + '-error');
                 return false;
             }
