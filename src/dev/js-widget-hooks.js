@@ -76,7 +76,7 @@
 
         /**
          *
-         * @param {Node} [root=body] the node to initialize the widgets on
+         * @param {Node|NodeList} [root=body] the node to initialize the widgets on
          * @param {{}} [options]
          */
         init: async function (root, options) {
@@ -109,34 +109,48 @@
                 debug("No root element could be found - is the DOM loaded already?");
             }
 
+            let rootNodes;
+
+            if (root instanceof NodeList) {
+                rootNodes = Array.from(root);
+            } else if (root instanceof Node) {
+                rootNodes = [root];
+            } else {
+                throw new Error("Invalid root element (must be vanilla Node or NodeList): " + typeof root);
+            }
+
             // get all the elements of the type widget
-            /** @type {Node} elem */
-            root.querySelectorAll('.' + that.widgetClass).forEach(function (elem) {
-                var dataWidgetsAttributeName = that.widgetDataName;
-                var names = elem.dataset[dataWidgetsAttributeName];
-                var successCount = 0;
+            rootNodes.forEach(function (rootElem) {
+                /** @type {Node} elem */
+                rootElem.querySelectorAll('.' + that.widgetClass).forEach(function (elem) {
+                    var dataWidgetsAttributeName = that.widgetDataName;
+                    var names = elem.dataset[dataWidgetsAttributeName];
+                    var successCount = 0;
 
-                if (names) {
-                    names.split(' ').forEach(function (name) {
-                        if (widgetArrays[name] !== undefined) {
-                            widgetArrays[name].push(elem);
-                            successCount++;
-                        } else {
-                            debug("No method for widget %o provided on %o", name, elem);
-                            elem.classList.add(that.widgetClass + '-config-error');
-                        }
-                    });
-                } else {
-                    debug("missing data-" + dataWidgetsAttributeName + " attribute on %o", elem);
-                    elem.classList.add(that.widgetClass + '-config-error');
-                }
+                    if (names) {
+                        names.split(' ').forEach(function (name) {
+                            if (widgetArrays[name] !== undefined) {
+                                widgetArrays[name].push(elem);
+                                successCount++;
+                            } else {
+                                debug("No method for widget %o provided on %o", name, elem);
+                                elem.classList.add(that.widgetClass + '-config-error');
+                            }
+                        });
+                    } else {
+                        debug("missing data-" + dataWidgetsAttributeName + " attribute on %o", elem);
+                        elem.classList.add(that.widgetClass + '-config-error');
+                    }
 
-                // only errors, no need to check ever again this page load
-                if (!successCount) {
-                    elem.classList.remove(that.widgetClass);
-                }
+                    // only errors, no need to check ever again this page load
+                    if (!successCount) {
+                        elem.classList.remove(that.widgetClass);
+                    }
 
+                });
             });
+
+            await yieldToMain();
 
             //  and initialise them according to the priority
             for (let widgetName in widgetArrays) {
