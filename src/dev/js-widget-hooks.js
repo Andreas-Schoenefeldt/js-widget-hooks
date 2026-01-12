@@ -116,11 +116,22 @@
             } else if (root instanceof Node) {
                 rootNodes = [root];
             } else {
-                throw new Error("Invalid root element (must be vanilla Node or NodeList): " + typeof root);
+                // thiw will also convert jQuery objects, so a last fallback for enumarables
+                rootNodes = Array.from(root);
+                if (!rootNodes.length) {
+                    throw new Error("Invalid root element (must be vanilla Node or NodeList): " + typeof root);
+                }
+            }
+
+            if (!rootNodes.length) {
+                console.warn("No root elements found - is the DOM loaded already?");
             }
 
             // get all the elements of the type widget
             rootNodes.forEach(function (rootElem) {
+                if (!rootElem instanceof Node) {
+                    throw new Error("Invalid root element %o", rootElem);
+                }
                 /** @type {Node} elem */
                 rootElem.querySelectorAll('.' + that.widgetClass).forEach(function (elem) {
                     var dataWidgetsAttributeName = that.widgetDataName;
